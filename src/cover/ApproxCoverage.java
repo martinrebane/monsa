@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import monsa.DataRow;
 import monsa.Rule;
 import monsa.WeigthComparator;
+import monsa.inputdata.DataRow;
 
 public class ApproxCoverage extends Coverage {
 

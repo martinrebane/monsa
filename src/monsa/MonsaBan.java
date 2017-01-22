@@ -3,6 +3,8 @@ package monsa;
 import java.util.HashMap;
 import java.util.TreeSet;
 
+import monsa.inputdata.DataRow;
+
 public class MonsaBan extends Monsa {
 
 	public MonsaBan(String filename, int classColNumber) throws Exception {

@@ -1,7 +1,7 @@
 package monsa;
 /*
  * MONSA family of algorithms
- * (C) Martin Rebane 2014
+ * @Author Martin Rebane 2014
  * 
  * */
 
@@ -18,6 +18,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import cover.ApproxCoverage;
 import cover.Coverage;
+import monsa.inputdata.DataRow;
+import monsa.inputdata.DatasetPreprocessor;
 
 public abstract class Monsa {
 
@@ -28,10 +30,6 @@ public abstract class Monsa {
 	
 	//recursion depth of the algorithm
 	private int algoDepth = 0;
-	
-	private String _separator = ",";
-	
-	private FileCachedReader fcr;
 	
 	private List<Rule> rawRuleSet = new ArrayList<>();
 	private List<Rule> dsrRuleSet = new ArrayList<>();
@@ -69,8 +67,9 @@ public abstract class Monsa {
 		// Initialize frequency table builder
 		FrequencyTableParent fq = new FrequencyTableParent(classColNumber, getUsedCells(0, null));
 
-		/*read in the file and record the number of data rows */
-		dataRowCount = parseFile(fq);
+		// read in the file and record the number of data rows
+		DatasetPreprocessor dataProcessor = new DatasetPreprocessor(filename, ";");
+		dataRowCount = dataProcessor.readFileIntoFrequencyTableAndGetNumOfRows(fq);
 
 		//locations of found rules: varNo -> value; this is not an output, it just marks used cells
 		//in frequency matrix. this is created only on upper level and passed down separately
@@ -209,35 +208,6 @@ public abstract class Monsa {
 		}
 	}
 
-	//reads in the data and returns data row count, not counting header row
-	private int parseFile(FrequencyTableParent fq) throws Exception {
-		
-		if(fcr == null){
-			fcr = new FileCachedReader(filename);
-		}
-		
-		//add header to frequency table
-		fq.parseHeader(fcr.getHeader(), _separator);
-		
-		//add data line by line
-		String line;
-		int line_num = 0;
-		
-		while((line = fcr.nextLine()) != null){
-			fq.addLine(new DataRow(line_num, line, _separator));
-			line_num++;
-		}
-		
-		return line_num;
-	}
-	
-	private void parseData(FrequencyTableParent fq, DataCache d) throws Exception {
-		
-		//add header to frequency table
-		fq.parseHeaderArray(d.getHeader());
-		fq.addLines(d);
-	}
-	
 	// finds complete rules in a given extract
 	// parent frequency table is passed to compare backwards
 	private void findZeroRules(FrequencyTableParent fq, FrequencyTableParent parentfq, int depth, 
@@ -318,6 +288,14 @@ public abstract class Monsa {
 				addIgnoredValue(extractFactor.getVar(), extractFactor.getVal(), depth, usedCells);
 			}
 		}
+	}
+	
+	
+	private void parseData(FrequencyTableParent fq, DataCache d) throws Exception {
+		
+		//add header to frequency table
+		fq.parseHeaderArray(d.getHeader());
+		fq.addLines(d);
 	}
 
 	// iterates though all different values for given variable to find rules

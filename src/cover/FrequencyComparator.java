@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import monsa.DataCache;
-import monsa.DataRow;
 import monsa.Rule;
+import monsa.inputdata.DataRow;
 
 /*
  * Compares rules by frequency, ignoring given set of objects

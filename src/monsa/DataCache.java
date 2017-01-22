@@ -3,6 +3,8 @@ package monsa;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import monsa.inputdata.DataRow;
+
 public class DataCache {
 	private String[] header;
 	private LinkedList<DataRow> dataRows = new LinkedList<>();

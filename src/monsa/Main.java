@@ -9,7 +9,7 @@ public class Main {
 	
 /* for testing in eclipse only */
 		
-		private static String filename = "C:\\TTU\\mag\\nursery_dataset\\nursery_num.csv";
+		private static String filename = "/home/martin/datatmp/nursery_num.csv";
 		private static int classColNumber = 9;
 	
 	

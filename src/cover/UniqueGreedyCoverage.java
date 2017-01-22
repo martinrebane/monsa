@@ -2,8 +2,8 @@ package cover;
 
 import java.util.ArrayList;
 
-import monsa.DataRow;
 import monsa.Rule;
+import monsa.inputdata.DataRow;
 
 /*
  * This filters out and adds to cover set all rules that uniquely cover at least 1 object

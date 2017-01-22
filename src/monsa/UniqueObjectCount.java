@@ -2,6 +2,8 @@ package monsa;
 
 import java.util.List;
 
+import monsa.inputdata.DataRow;
+
 /*
  * computes how many unique objects (data rows) a ruleset covers
  * 

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import monsa.DataCache;
-import monsa.DataRow;
 import monsa.Rule;
+import monsa.inputdata.DataRow;
 
 public abstract class Coverage {
 	

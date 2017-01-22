@@ -1,4 +1,4 @@
-package monsa;
+package monsa.inputdata;
 
 import java.io.BufferedReader;
 import java.io.Console;

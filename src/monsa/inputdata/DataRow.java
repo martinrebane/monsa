@@ -1,4 +1,4 @@
-package monsa;
+package monsa.inputdata;
 
 public class DataRow {
 	private int rowNumber;

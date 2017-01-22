@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import monsa.inputdata.DataRow;
+
 /*
  * Parent frequency table, stores information about children
  and class column number
