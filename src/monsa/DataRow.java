@@ -1,0 +1,38 @@
+package monsa;
+
+public class DataRow {
+	private int rowNumber;
+	private int[] data;
+	
+	DataRow(int rowNumber, int[] data){
+		this.rowNumber = rowNumber;
+		this.data = data;
+	}
+	
+	//accept integers as string and convert to int
+	DataRow(int rowNumber, String dataLine, String separator){
+		this.rowNumber = rowNumber;
+		
+		String[] dataStr = dataLine.split(separator); 
+		
+		data = new int[dataStr.length];
+		int i = 0;
+		for(String s : dataStr){
+			data[i] = Integer.parseInt(s);
+			i++;
+		}
+	}
+
+	public int getRowNumber() {
+		return rowNumber;
+	}
+
+	public int[] getData() {
+		return data;
+	}
+	
+	//returns whether this row has varNo == val
+	public boolean columnMatch(int varNo, int val){
+		return data[varNo] == val;
+	}
+}
