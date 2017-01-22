@@ -1,8 +1,8 @@
 package monsa;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -11,7 +11,7 @@ abstract class FrequencyTable {
 	//frequency table: COLNUMBER => SimpleEntry<VALUE, FREQUENCY_OF_VALUE>
 	protected HashMap<Integer,HashMap<Integer,AtomicInteger>> _table;
 	
-	protected HashMap<Integer, ArrayList<Integer>> usedCells;
+	protected HashMap<Integer, List<Integer>> usedCells;
 	
 	private int cellCount = 0;
 	

@@ -1,6 +1,6 @@
 package monsa;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /*
  * computes how many unique objects (data rows) a ruleset covers
@@ -14,7 +14,7 @@ int[] usedRows;
 // how many rows are covered
 private int usedRowsCount;	
 
-public UniqueObjectCount(ArrayList<Rule> ruleSet, int dataRowCount) {
+public UniqueObjectCount(List<Rule> ruleSet, int dataRowCount) {
 	
 	// empty integer array for marking objects that appear in rules
 	usedRows = new int[dataRowCount];

@@ -3,6 +3,7 @@ package cover;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import monsa.DataRow;
 import monsa.Rule;
@@ -14,10 +15,9 @@ public class ApproxCoverage extends Coverage {
 		super(freeFactorLimitCover);
 	}
 	
-	public void getCoverage(ArrayList<Rule> rSet) {
-		@SuppressWarnings("unchecked")
-		ArrayList<Rule> ruleSet = (ArrayList<Rule>) rSet.clone();
-		HashMap<Integer, ArrayList<Rule>> ruleMapping = new HashMap<>();
+	public void getCoverage(List<Rule> rSet) {
+		List<Rule> ruleSet = new ArrayList<>(rSet);
+		HashMap<Integer, List<Rule>> ruleMapping = new HashMap<>();
 		
 		// this is used to calculate useful frequencies and sort
 		fc = new FrequencyComparator(usedRows);
@@ -73,7 +73,7 @@ public class ApproxCoverage extends Coverage {
 				continue;
 			}
 			
-			ArrayList<Rule> rmap = ruleMapping.get(i);
+			List<Rule> rmap = ruleMapping.get(i);
 			
 			// add best rule to the selection if not already in selection
 			if (rmap != null && rmap.size() > 0) {

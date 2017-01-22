@@ -1,25 +1,16 @@
 package cover;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.List;
 
 import monsa.DataCache;
 import monsa.DataRow;
 import monsa.Rule;
-import monsa.RuleComparator;
-import monsa.WeigthComparator;
-import monsa.BasicComparator;
 
 public abstract class Coverage {
 	
 // set of rules that cover some unique objects
-protected ArrayList<Rule> usefulSet = new ArrayList<>();
+protected List<Rule> usefulSet = new ArrayList<>();
 protected int[] usedRows;
 protected FrequencyComparator fc;
 
@@ -37,7 +28,7 @@ public Coverage(int freeFactorLimitCover) {
 	this.minCover = freeFactorLimitCover;
 }
 
-public abstract void getCoverage(ArrayList<Rule> rSet);
+public abstract void getCoverage(List<Rule> rSet);
 
 public abstract String getName();
 
@@ -71,7 +62,7 @@ protected void addToSelection(Rule r) {
 	}
 }
 
-public ArrayList<Rule> getCoverageSet() {
+public List<Rule> getCoverageSet() {
 	return usefulSet;
 }
 
@@ -81,7 +72,7 @@ public int getObjectCount(){
 }
 
 // computes whether algorithm should continue with the ruleset or abort operations
-protected boolean validateRuleSet(ArrayList<Rule> rSet) {
+protected boolean validateRuleSet(List<Rule> rSet) {
 	if (rSet.size() < 1) {
 		return false;
 	}

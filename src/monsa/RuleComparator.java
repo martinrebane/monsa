@@ -1,11 +1,11 @@
 package monsa;
 
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class RuleComparator implements Comparator<Rule>{
 
-public static void markDuplicates(ArrayList<Rule> ruleSet){
+public static void markDuplicates(List<Rule> ruleSet){
 
 	for (Rule r: ruleSet) {
 		if(r.isDuplicate()) {

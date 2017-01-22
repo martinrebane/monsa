@@ -11,11 +11,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import cover.*;
+import cover.ApproxCoverage;
+import cover.Coverage;
 
 public abstract class Monsa {
 
@@ -31,12 +33,12 @@ public abstract class Monsa {
 	
 	private FileCachedReader fcr;
 	
-	private ArrayList<Rule> rawRuleSet = new ArrayList<>();
-	private ArrayList<Rule> dsrRuleSet = new ArrayList<>();
-	private ArrayList<Rule> coverageRuleSet = new ArrayList<>();
+	private List<Rule> rawRuleSet = new ArrayList<>();
+	private List<Rule> dsrRuleSet = new ArrayList<>();
+	private List<Rule> coverageRuleSet = new ArrayList<>();
 	
 	// set that is passed to coverage algorithm
-	private ArrayList<Rule> passToCoverageRuleSet = dsrRuleSet;
+	private List<Rule> passToCoverageRuleSet = dsrRuleSet;
 	
 	private int dataRowCount, coverageObjectCount = 0;
 	
@@ -59,10 +61,6 @@ public abstract class Monsa {
 		this.classColNumber = classColNumber;
 	}
 	
-	// set minimum allowed object frequency for the rules found by algorithm
-	public void setFreqLimit(int i) {
-		freeFactorLimitAlgo = i;
-	}
 	
 	public void runAlgo() throws Exception {
 				
@@ -122,16 +120,6 @@ public abstract class Monsa {
 		
 		//sort DSR ruleset
 		Collections.sort(rawRuleSet);
-	}
-	
-	// instead of passing DSR set to coverage algorithm, pass RAW set
-	public void passRawToCoverage() {
-		passToCoverageRuleSet = rawRuleSet;
-	}
-	
-	// sets coverage algorithm object
-	public void setCoverage(Coverage cov) {
-		covered_set = cov;
 	}
 
 	// outputs information and results
@@ -204,7 +192,7 @@ public abstract class Monsa {
 		return (algoRuleTime-algoStartTime)/1_000_000_000.0;
 	}
 
-	private void printRuleset(ArrayList<Rule> ruleSet, OutputAdapter oa, int threshold) {
+	private void printRuleset(List<Rule> ruleSet, OutputAdapter oa, int threshold) {
 		int count = 0;
 		int c = 0;
 		for(Rule r : ruleSet){
@@ -428,9 +416,9 @@ public abstract class Monsa {
 	abstract boolean isRule(Integer count, int freq);
 	
 	// returns used cells according to algorithm depth
-	private HashMap<Integer,ArrayList<Integer>> getUsedCells(int depth, LinkedList<BannedCell> _usedCells){
+	private HashMap<Integer,List<Integer>> getUsedCells(int depth, LinkedList<BannedCell> _usedCells){
 		
-		HashMap<Integer,ArrayList<Integer>> uc = new HashMap<Integer,ArrayList<Integer>>();
+		HashMap<Integer,List<Integer>> uc = new HashMap<>();
 		
 		if(_usedCells == null)
 			return uc;
@@ -498,5 +486,21 @@ public abstract class Monsa {
 	// returns whether given class column can be added to the DataCache of a rule
 	protected boolean columnMatch(int classValue, DataRow dr, int classColNum) {
 		return !dr.columnMatch((classColNum-1), classValue);
+	}
+	
+
+	// set minimum allowed object frequency for the rules found by algorithm
+	public void setFreqLimit(int i) {
+		freeFactorLimitAlgo = i;
+	}
+	
+	// instead of passing DSR set to coverage algorithm, pass RAW set
+	public void passRawToCoverage() {
+		passToCoverageRuleSet = rawRuleSet;
+	}
+	
+	// sets coverage algorithm object
+	public void setCoverage(Coverage cov) {
+		covered_set = cov;
 	}
 }

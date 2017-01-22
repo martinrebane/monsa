@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -41,7 +42,7 @@ public class FrequencyTableParent extends FrequencyTable {
 	// userCells - cells that are not to be considered as rule
 	// has been already extracted
 	public FrequencyTableParent(int classColNumber,
-			HashMap<Integer, ArrayList<Integer>> _usedCells) {
+			HashMap<Integer, List<Integer>> _usedCells) {
 
 		// internal storage of class col number starts from 0
 		_classColNumber = classColNumber - 1;
@@ -178,7 +179,7 @@ public class FrequencyTableParent extends FrequencyTable {
 	// returns treeset with remaining frequencies
 	// does not count cells that are marked in usedCells (cells where rules have been found)
 	public TreeSet<VarValFrequency> getRemainingFrequenciesInOrder(
-		HashMap<Integer, ArrayList<Integer>> usedCells,TreeSet<VarValFrequency> retArr) {
+		HashMap<Integer, List<Integer>> usedCells,TreeSet<VarValFrequency> retArr) {
 
 		//Integer minValue = null;
 
@@ -201,7 +202,7 @@ public class FrequencyTableParent extends FrequencyTable {
 
 	//if key is banned from extract
 	//returns true if it is, false if not
-	private boolean keyBanned(HashMap<Integer, ArrayList<Integer>> usedCells,
+	private boolean keyBanned(HashMap<Integer, List<Integer>> usedCells,
 			int variableNo,	int varValue) {
 		//variable is not in banned list at all
 		if(!usedCells.containsKey(variableNo)){

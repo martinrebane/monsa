@@ -2,6 +2,7 @@ package cover;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import monsa.Rule;
 
@@ -11,7 +12,7 @@ public class GreedyCoverage extends Coverage {
 		super(freeFactorLimitCover);
 	}
 	
-	public void getCoverage(ArrayList<Rule> ruleSet){
+	public void getCoverage(List<Rule> ruleSet){
 		
 		// if empty rule set, do nothing (keeps usefulSet as it is)
 		if (!validateRuleSet(ruleSet)) {
@@ -20,8 +21,7 @@ public class GreedyCoverage extends Coverage {
 		
 		// make a copy to manipulate with
 		// not required by the algorithm, but this preserves the original
-		@SuppressWarnings("unchecked")
-		ArrayList<Rule> rSet = (ArrayList<Rule>) ruleSet.clone();
+		List<Rule> rSet = new ArrayList<>(ruleSet);
 		
 		// this is used to calculate useful frequencies and sort
 		fc = new FrequencyComparator(usedRows);
@@ -34,7 +34,7 @@ public class GreedyCoverage extends Coverage {
 
 	// rSet - sorted rule set
 	// adds "best" rule to the selection of final rules
-	private void optiTakeBest(ArrayList<Rule> rSet) {
+	private void optiTakeBest(List<Rule> rSet) {
 		
 		// add first rule in sorted rule set to set of useful rules
 		// and do statistics
