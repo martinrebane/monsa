@@ -3,15 +3,16 @@ package monsa;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 abstract class FrequencyTable {
 	
 	//frequency table: COLNUMBER => SimpleEntry<VALUE, FREQUENCY_OF_VALUE>
-	protected HashMap<Integer,HashMap<Integer,AtomicInteger>> _table;
+	protected Map<Integer,Map<Integer,AtomicInteger>> _table;
 	
-	protected HashMap<Integer, List<Integer>> usedCells;
+	protected Map<Integer, List<Integer>> usedCells;
 	
 	private int cellCount = 0;
 	
@@ -53,9 +54,9 @@ abstract class FrequencyTable {
 	public int getVariableCount() {
 		if(_table != null){
 			int retval = 0;
-			Iterator<Entry<Integer, HashMap<Integer, AtomicInteger>>> it = _table.entrySet().iterator();
+			Iterator<Entry<Integer, Map<Integer, AtomicInteger>>> it = _table.entrySet().iterator();
 			while(it.hasNext()){
-				Entry<Integer, HashMap<Integer, AtomicInteger>> e = it.next();
+				Entry<Integer, Map<Integer, AtomicInteger>> e = it.next();
 				if(!e.getValue().isEmpty())
 					retval ++;
 			}

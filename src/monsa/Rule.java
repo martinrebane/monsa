@@ -1,16 +1,17 @@
 package monsa;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class Rule implements Comparable<Rule>{
 	//class variable value that the rule acts upon
 	private int classVariableValue;
 	
-	private HashMap<Integer, String> colNames = new HashMap<>();
+	private Map<Integer, String> colNames = new HashMap<>();
 	
 	//pairs of Var-Value that will cause the rule to happen
-	private HashMap<Integer, Integer> rule = new HashMap<>();
+	private Map<Integer, Integer> rule = new HashMap<>();
 
 	// how many objects are covered
 	private int frequency;
@@ -178,7 +179,7 @@ public boolean isDuplicate() {
 	return isDuplicate;
 }
 
-public HashMap<Integer,Integer> getRuleParts(){
+public Map<Integer,Integer> getRuleParts(){
 	return rule;
 }
 

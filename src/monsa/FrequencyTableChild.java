@@ -3,12 +3,13 @@ package monsa;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FrequencyTableChild extends FrequencyTable{
-	public FrequencyTableChild(HashMap<Integer,String> _colNames, HashMap<Integer,List<Integer>> _usedCells){
+	public FrequencyTableChild(Map<Integer,String> _colNames, Map<Integer,List<Integer>> _usedCells){
 		// initialize table
-		_table = new HashMap<Integer, HashMap<Integer, AtomicInteger>>(_colNames.size());
+		_table = new HashMap<Integer, Map<Integer, AtomicInteger>>(_colNames.size());
 		usedCells = _usedCells;
 		
 		// create empty structure, hashmap for each variable

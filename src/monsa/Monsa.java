@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -219,12 +220,12 @@ public abstract class Monsa {
 		extractCount++;
 		
 		// iterator of main frequency table
-		Iterator<Entry<Integer, HashMap<Integer, AtomicInteger>>> it = fq._table.entrySet().iterator();
+		Iterator<Entry<Integer, Map<Integer, AtomicInteger>>> it = fq._table.entrySet().iterator();
 		
 		// iterate through each variable in the dataset
 		// to see if frequencies match for some value in class frequency table
 		while(it.hasNext()){
-			Entry<Integer, HashMap<Integer, AtomicInteger>> e = it.next();
+			Entry<Integer, Map<Integer, AtomicInteger>> e = it.next();
 			
 			// variable number (0 - n-1)
 			int varNo = e.getKey();
@@ -297,7 +298,7 @@ public abstract class Monsa {
 	}
 
 	// iterates though all different values for given variable to find rules
-	private void iterateValues(int varNo, HashMap<Integer, AtomicInteger> h, FrequencyTableParent fq,
+	private void iterateValues(int varNo, Map<Integer, AtomicInteger> h, FrequencyTableParent fq,
 			FrequencyTableParent parentfq, int depth, LinkedList<BannedCell> usedCells) throws Exception {
 		
 		// for each ***variable-value*** combination, cycle
@@ -392,7 +393,7 @@ public abstract class Monsa {
 	abstract boolean isRule(Integer count, int freq);
 	
 	// returns used cells according to algorithm depth
-	private HashMap<Integer,List<Integer>> getUsedCells(int depth, LinkedList<BannedCell> _usedCells){
+	private Map<Integer,List<Integer>> getUsedCells(int depth, LinkedList<BannedCell> _usedCells){
 		
 		HashMap<Integer,List<Integer>> uc = new HashMap<>();
 		
@@ -427,7 +428,7 @@ public abstract class Monsa {
 	}
 	
 	// parses DataCaches and adds rows that match filter
-	private DataCache filterData(DataCache d, int classValue, HashMap<Integer,Integer> ruleParts, int objectCount) throws Exception{
+	private DataCache filterData(DataCache d, int classValue, Map<Integer,Integer> ruleParts, int objectCount) throws Exception{
 		DataCache subd = new DataCache(d.getHeader());
 		
 		DataRow dr;

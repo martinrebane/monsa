@@ -2,6 +2,7 @@ package monsa;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RuleMap {
@@ -9,7 +10,7 @@ public class RuleMap {
 private HashMap<Integer,HashMap<Integer,AtomicInteger>> mapTable = new HashMap<>();
 
 // compute how many times each object is covered by rules
-RuleMap(HashMap<Integer,HashMap<Integer,AtomicInteger>> fp, ArrayList<Rule> ruleSet){
+RuleMap(Map<Integer,HashMap<Integer,AtomicInteger>> fp, ArrayList<Rule> ruleSet){
 	
 	// copy over the table to create new freq table with same structure
 	// but all frequencies zeroes
@@ -23,7 +24,7 @@ RuleMap(HashMap<Integer,HashMap<Integer,AtomicInteger>> fp, ArrayList<Rule> rule
 	System.out.println(mapTable);
 	// compute how many rules cover specific values
 	for(Rule r : ruleSet){
-		HashMap<Integer, Integer> rp = r.getRuleParts();
+		Map<Integer, Integer> rp = r.getRuleParts();
 		for(int k : rp.keySet()){
 			//update frequency by one
 			mapTable.get(k).get(rp.get(k)).getAndIncrement();

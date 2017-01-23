@@ -1,10 +1,10 @@
 package monsa;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,11 +20,11 @@ public class FrequencyTableParent extends FrequencyTable {
 	// sub frequency-tables
 	// integer represents value of class column variable
 	// value_of_class_variable => frequencies
-	protected HashMap<Integer, FrequencyTableChild> children = new HashMap<Integer, FrequencyTableChild>();
+	protected Map<Integer, FrequencyTableChild> children = new HashMap<Integer, FrequencyTableChild>();
 
 	// links _colNames in header to int values
 	//_allColNames stores all columns names for reference in toString()
-	private HashMap<Integer, String> _colNames, _allColNames;
+	private Map<Integer, String> _colNames, _allColNames;
 
 	//stack for extract conditions
 	private ArrayDeque<VarValFrequency> rowSelectors = new ArrayDeque<VarValFrequency>();
@@ -43,8 +43,7 @@ public class FrequencyTableParent extends FrequencyTable {
 	// internal storage of class col number starts from 0
 	// userCells - cells that are not to be considered as rule
 	// has been already extracted
-	public FrequencyTableParent(int classColNumber,
-			HashMap<Integer, List<Integer>> _usedCells) {
+	public FrequencyTableParent(int classColNumber, Map<Integer, List<Integer>> _usedCells) {
 
 		// internal storage of class col number starts from 0
 		_classColNumber = classColNumber - 1;
@@ -65,7 +64,7 @@ public class FrequencyTableParent extends FrequencyTable {
 		_colNames = new HashMap<Integer, String>(h.length);
 
 		// initialize table
-		_table = new HashMap<Integer, HashMap<Integer, AtomicInteger>>(h.length);
+		_table = new HashMap<Integer, Map<Integer, AtomicInteger>>(h.length);
 
 		// store _colNames and create empty structure for _table
 		for (int i = 0; i < h.length; i++) {
@@ -73,7 +72,7 @@ public class FrequencyTableParent extends FrequencyTable {
 			_table.put(i, new HashMap<Integer, AtomicInteger>());
 		}
 		
-		_allColNames = (HashMap<Integer, String>) _colNames.clone();
+		_allColNames = new HashMap<>(_colNames);
 		
 		//allow only non-class and non-extract columns to be indexed
 		//remove class var
@@ -107,19 +106,19 @@ public class FrequencyTableParent extends FrequencyTable {
 	// to the table
 	public void addLine(DataRow dataRow) {
 
-		int[] h = dataRow.getData();
+		int[] dataArr = dataRow.getData();
 		
 		//kontrollime, kas on t2idetud extracti tingimused
-		int classValue = h[_classColNumber];
+		int classValue = dataArr[_classColNumber];
 		
 		//check if extract condition are met
 		//this allows or removes WHOLE ROW of data
 		if(!rowSelectors.isEmpty()){
 			Iterator<VarValFrequency> i = rowSelectors.iterator();
 			while(i.hasNext()){
-				VarValFrequency vvf = i.next();
+				VarValFrequency varValFreq = i.next();
 				//extract column value does not match, do not count this row
-				if(h[vvf.getVar()] != vvf.getVal()){
+				if(dataArr[varValFreq.getVar()] != varValFreq.getVal()){
 					return;
 				}
 			}
@@ -133,7 +132,7 @@ public class FrequencyTableParent extends FrequencyTable {
 		for (Integer colNum : _colNames.keySet()) {
 			
 			// value of the cell
-			Integer colValue = h[colNum];
+			Integer colValue = dataArr[colNum];
 			
 			// adds value to frequency table
 			// i'th column, value colValue
@@ -179,12 +178,11 @@ public class FrequencyTableParent extends FrequencyTable {
 	
 	// returns treeset with remaining frequencies
 	// does not count cells that are marked in usedCells (cells where rules have been found)
-	public TreeSet<VarValFrequency> getRemainingFrequenciesInOrder(
-		HashMap<Integer, List<Integer>> usedCells,TreeSet<VarValFrequency> retArr) {
+	public TreeSet<VarValFrequency> getRemainingFrequenciesInOrder(Map<Integer, List<Integer>> usedCells,TreeSet<VarValFrequency> retArr) {
 
 		//Integer minValue = null;
 
-		for (Entry<Integer, HashMap<Integer, AtomicInteger>> e : _table
+		for (Entry<Integer, Map<Integer, AtomicInteger>> e : _table
 				.entrySet()) {
 
 			// if usedCells has restrictions on that variable, extract those
@@ -203,7 +201,7 @@ public class FrequencyTableParent extends FrequencyTable {
 
 	//if key is banned from extract
 	//returns true if it is, false if not
-	private boolean keyBanned(HashMap<Integer, List<Integer>> usedCells,
+	private boolean keyBanned(Map<Integer, List<Integer>> usedCells,
 			int variableNo,	int varValue) {
 		//variable is not in banned list at all
 		if(!usedCells.containsKey(variableNo)){
@@ -240,21 +238,21 @@ public class FrequencyTableParent extends FrequencyTable {
 	public String extractFactorsToString(){
 		
 		Iterator<VarValFrequency> it = rowSelectors.iterator();
-		StringBuilder s = new StringBuilder();
+		StringBuilder strBuilder = new StringBuilder();
 		
 		while(it.hasNext()){
 			VarValFrequency e = it.next();
-			s.append((e.getVar()+1) + "." + e.getVal() + " & ");
+			strBuilder.append((e.getVar()+1) + "." + e.getVal() + " & ");
 		}
 		
-		return s.toString();
+		return strBuilder.toString();
 	}
 	
 	public DataCache getData(){
 		return data;
 	}
 	
-	public HashMap<Integer,HashMap<Integer,AtomicInteger>> getTable(){
+	public Map<Integer,Map<Integer,AtomicInteger>> getTable(){
 		return _table;
 	}
 	
