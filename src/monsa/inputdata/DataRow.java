@@ -1,30 +1,29 @@
 package monsa.inputdata;
 
 public class DataRow {
-	private int rowNumber;
+	private int rowNumberInDataset;
 	private int[] data;
 	
 	DataRow(int rowNumber, int[] data){
-		this.rowNumber = rowNumber;
+		this.rowNumberInDataset = rowNumber;
 		this.data = data;
 	}
 	
 	//accept integers as string and convert to int
-	DataRow(int rowNumber, String dataLine, String separator){
-		this.rowNumber = rowNumber;
+	DataRow(int rowNumber, String[] dataStr, ValueMapper valueMapper){
+		this.rowNumberInDataset = rowNumber;
+		this.data = new int[dataStr.length];
 		
-		String[] dataStr = dataLine.split(separator); 
-		
-		data = new int[dataStr.length];
 		int i = 0;
 		for(String s : dataStr){
-			data[i] = Integer.parseInt(s);
+			data[i] = valueMapper.getValueAsInt(s);
+			//data[i] = Integer.parseInt(s);
 			i++;
 		}
 	}
 
 	public int getRowNumber() {
-		return rowNumber;
+		return rowNumberInDataset;
 	}
 
 	public int[] getData() {

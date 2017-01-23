@@ -15,11 +15,12 @@ public class DatasetPreprocessor {
 	
 	private String filename;
 	private String separator;
+	private ValueMapper valueMapper;
 	
 	public DatasetPreprocessor(String filename, String separator){
 		this.filename = filename;
 		this.separator = separator;
-		
+		this.valueMapper = new ValueMapper();
 	}
 	
 	//reads in the data and returns data row count, not counting header row
@@ -34,7 +35,8 @@ public class DatasetPreprocessor {
 		
 		try(Stream<String> lineStream = Files.lines(Paths.get(filename))) {
 			for (String line : (Iterable<String>) lineStream.skip(1)::iterator) {
-				fq.addLine(new DataRow(line_num, line, separator));
+				String[] dataStrArr = line.split(separator); 
+				fq.addLine(new DataRow(line_num, dataStrArr, valueMapper));
 				line_num++;	
 			}
 		}
