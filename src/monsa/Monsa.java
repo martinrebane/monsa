@@ -59,7 +59,6 @@ public abstract class Monsa {
 		this.classColNumber = classColNumber;
 	}
 	
-	
 	public void runAlgo() throws Exception {
 				
 		algoStartTime = System.nanoTime();
@@ -290,7 +289,6 @@ public abstract class Monsa {
 		}
 	}
 	
-	
 	private void parseData(FrequencyTableParent fq, DataCache d) throws Exception {
 		
 		//add header to frequency table
@@ -419,13 +417,13 @@ public abstract class Monsa {
 	
 	// get shallow copy of usedCells linked list
 	private LinkedList<BannedCell> usedCellsCopy(LinkedList<BannedCell> c){
-		LinkedList<BannedCell> uc = new LinkedList<>();
+		LinkedList<BannedCell> usedCells = new LinkedList<>();
 		
 		for(BannedCell bc : c){
-			uc.add(bc);
+			usedCells.add(bc);
 		}
 		
-		return uc;
+		return usedCells;
 	}
 	
 	// parses DataCaches and adds rows that match filter
@@ -458,7 +456,6 @@ public abstract class Monsa {
 		}
 		return subd;
 	}
-
 	
 	// can be overridden by specific algorithm
 	// returns whether given class column can be added to the DataCache of a rule

@@ -107,7 +107,6 @@ public class FrequencyTableParent extends FrequencyTable {
 	// to the table
 	public void addLine(DataRow dataRow) {
 
-		
 		int[] h = dataRow.getData();
 		
 		//kontrollime, kas on t2idetud extracti tingimused
